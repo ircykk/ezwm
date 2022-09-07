@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:nfz="https://ezwm.nfz.gov.pl/ws/broker/nfz/xml/e-zpo/status-response/v2.1" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" targetNamespace="https://ezwm.nfz.gov.pl/ws/broker/nfz/xml/e-zpo/status-response/v2.1" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>
+  <xs:element name="komunikat">
+    <xs:complexType>
+		<xs:sequence>
+		  <xs:choice>
+			<xs:element name="status-info" minOccurs="1" maxOccurs="1">
+			  <xs:complexType>
+				<xs:choice>
+				  <xs:element name="status-zlecenia" minOccurs="1" maxOccurs="1">
+					<xs:complexType>
+					  <xs:sequence>
+						<xs:element name="status-realizacji" minOccurs="0" maxOccurs="unbounded">
+						  <xs:complexType>
+							<xs:attribute name="mies-od" use="optional" type="nfz:TRokMiesiac"/>
+							<xs:attribute name="lb-mies" use="optional" type="nfz:TLbMies"/>
+							<xs:attribute name="status" use="required" type="nfz:TStatusRealizacjiStatus"/>
+						  </xs:complexType>
+						</xs:element>
+					  </xs:sequence>
+					  <xs:attribute name="status" use="required" type="nfz:TStatusZleceniaStatus"/>
+					</xs:complexType>
+				  </xs:element>
+				  <xs:element name="status-weryfikacji" minOccurs="1" maxOccurs="1">
+					<xs:complexType>
+					  <xs:attribute name="mies-od" use="optional" type="nfz:TRokMiesiac"/>
+					  <xs:attribute name="lb-mies" use="optional" type="nfz:TLbMies"/>
+					  <xs:attribute name="status" use="required" type="nfz:TStatusWeryfikacjiStatus"/>
+					</xs:complexType>
+				  </xs:element>
+				  <xs:element name="status-potwierdzenia-realizacji" minOccurs="1" maxOccurs="1">
+					<xs:complexType>
+					  <xs:attribute name="mies-od" use="optional" type="nfz:TRokMiesiac"/>
+					  <xs:attribute name="lb-mies" use="optional" type="nfz:TLbMies"/>
+					  <xs:attribute name="status" use="required" type="nfz:TStatusPotwierdzeniaRealizacjiStatus"/>
+					</xs:complexType>
+				  </xs:element>
+				</xs:choice>
+			  </xs:complexType>
+			</xs:element>
+			<xs:element name="problem" minOccurs="1" maxOccurs="unbounded">
+			  <xs:complexType>
+				<xs:attribute name="kod-problemu" use="required" type="nfz:TTekstDo10"/>
+				<xs:attribute name="opis" use="required" type="nfz:TTekstDo1000"/>
+			  </xs:complexType>
+			</xs:element>
+		  </xs:choice>
+    	  <xs:element ref="dsig:Signature" minOccurs="0"/>
+  		</xs:sequence>
+		<xs:attribute name="nazwa-sys" type="nfz:TTekst3Do15" use="required"/>
+		<xs:attribute name="wersja-sys" type="nfz:TTekstDo15" use="required"/>
+		<xs:attribute name="id-trans" type="nfz:TTekstDo38" use="required"/>
+		<xs:attribute name="typ" use="required" type="nfz:TTypKomunikatu"/>
+		<xs:attribute name="data-gen" use="required" type="nfz:TDataTime"/>
+		<xs:attribute name="nr-zlecenia-nfz" use="required" type="nfz:TNrZleceniaNfz"/>
+		<xs:attribute name="id-tech-dokumentu-nfz" use="optional" type="nfz:TTekstDo38"/>
+    </xs:complexType>
+    <xs:unique name="UniqueProblem">
+      <xs:selector xpath="nfz:problem"/>
+      <xs:field xpath="@kod-problemu"/>
+    </xs:unique>
+  </xs:element>
+  <xs:simpleType name="TTekstDo10">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekst3Do15">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="3"/>
+      <xs:maxLength value="15"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo15">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="15"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo38">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="38"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo1000">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="1000"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TRokMiesiac">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="\d{4}-\d{2}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TDataTime">
+    <xs:restriction base="xs:dateTime"/>
+  </xs:simpleType>
+  <xs:simpleType name="TNrZleceniaNfz">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="17"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TLbMies">
+    <xs:restriction base="xs:integer">
+      <xs:totalDigits value="2"/>
+      <xs:minInclusive value="1"/>
+      <xs:maxInclusive value="12"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTypKomunikatu">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="https://ezwm.nfz.gov.pl/ws/broker/nfz/xml/e-zpo/statusy/status-zlecenia"/>
+      <xs:enumeration value="https://ezwm.nfz.gov.pl/ws/broker/nfz/xml/e-zpo/statusy/status-weryfikacji-zlecenia"/>
+      <xs:enumeration value="https://ezwm.nfz.gov.pl/ws/broker/nfz/xml/e-zpo/statusy/status-potwierdzenia-realizacji"/>
+    </xs:restriction>
+  </xs:simpleType>  
+  <xs:simpleType name="TStatusZleceniaStatus">
+    <xs:restriction base="xs:string">
+	  <xs:enumeration value="R"/>
+	  <xs:enumeration value="W"/>
+	  <xs:enumeration value="P"/>
+	  <xs:enumeration value="N"/>
+	  <xs:enumeration value="A"/>
+      <xs:enumeration value="Z"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TStatusWeryfikacjiStatus">
+    <xs:restriction base="xs:string">
+	  <xs:enumeration value="W"/>
+	  <xs:enumeration value="Z"/>
+	  <xs:enumeration value="A"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TStatusRealizacjiStatus">
+	<xs:restriction base="xs:string">
+	  <xs:enumeration value="B"/>
+	  <xs:enumeration value="A"/>
+	  <xs:enumeration value="W"/>
+	  <xs:enumeration value="R"/>
+	  <xs:enumeration value="Z"/>
+	</xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TStatusPotwierdzeniaRealizacjiStatus">
+    <xs:restriction base="xs:string">
+	  <xs:enumeration value="W"/>
+	  <xs:enumeration value="Z"/>						
+  	  <xs:enumeration value="A"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

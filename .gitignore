@@ -1,0 +1,5 @@
+tools/
+vendor/
+*.cache
+.idea
+metadata/*.yml

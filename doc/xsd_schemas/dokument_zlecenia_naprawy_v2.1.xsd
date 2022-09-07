@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:nfz="https://ezwm.nfz.gov.pl/xml/e-zpo/dok-zlecenia-naprawy/v2.1" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" targetNamespace="https://ezwm.nfz.gov.pl/xml/e-zpo/dok-zlecenia-naprawy/v2.1" elementFormDefault="qualified" attributeFormDefault="unqualified">
+ <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/> 
+ <xs:element name="dokument-zpo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="zlecenie" minOccurs="1" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="pacjent" minOccurs="1" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+				    <xs:element name="potw-uprawnien" minOccurs="0" maxOccurs="1">
+						<xs:complexType>
+						  <xs:sequence>
+							<xs:choice>
+								<xs:element name="oswiadczenie" minOccurs="1" maxOccurs="1">
+									<xs:complexType>
+										<xs:attribute name="data-oswiadczenia" type="nfz:TData" use="required"/>
+										<xs:attribute name="osoba-sklad" type="nfz:TOsobaSklad" use="required"/>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="dokument" minOccurs="1" maxOccurs="1">						
+									<xs:complexType>
+									  <xs:sequence>
+										<xs:element name="dokument-ue" minOccurs="0" maxOccurs="1">
+										  <xs:complexType>
+											<xs:attribute name="panstwo" use="required" type="nfz:TTekstDo2"/>
+											<xs:attribute name="id-osoby" use="optional" type="nfz:TTekstDo30"/>
+											<xs:attribute name="kod-inst" use="required" type="nfz:TTekstDo10"/>
+											<xs:attribute name="akronim-nazwy" use="optional" type="nfz:TTekstDo25"/>
+											<xs:attribute name="id-inst-cwu" use="optional" type="nfz:TTekstDo30"/>
+										  </xs:complexType>
+										</xs:element>
+									  </xs:sequence>
+									  <xs:attribute name="rodzaj" type="nfz:TLiczba4_0z0" use="required"/>
+									  <xs:attribute name="numer" type="nfz:TTekstDo40" use="optional"/>
+									  <xs:attribute name="data-wyst" type="nfz:TData" use="optional"/>
+									  <xs:attribute name="data-wazn-od" type="nfz:TData" use="optional"/>
+									  <xs:attribute name="data-wazn-do" type="nfz:TData" use="optional"/>
+									</xs:complexType>
+								</xs:element>
+							</xs:choice>
+						  </xs:sequence>
+						  <xs:attribute name="tytul-uprawn" use="required" type="nfz:TTekstDo3"/>
+						</xs:complexType>
+					</xs:element>
+                    <xs:element name="upraw-dod" minOccurs="0" maxOccurs="1">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="upraw-dod-dok" minOccurs="1" maxOccurs="1">
+                            <xs:complexType>
+                              <xs:attribute name="rodzaj-dokumentu" use="required" type="nfz:TTekstDo10"/>
+                              <xs:attribute name="nr-dokumentu" use="optional" type="nfz:TTekstDo40"/>
+                              <xs:attribute name="data-wystawienia" type="nfz:TData" use="required"/>
+                              <xs:attribute name="data-waznosci" type="nfz:TData" use="optional"/>
+							  <xs:attribute name="bezterminowy" use="required" type="nfz:TTakNie"/>
+                              <xs:attribute name="npwz" use="optional" type="nfz:TTekst7"/>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="upraw-dod-kod" use="required" type="nfz:TUprawDodKod"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="typ-id-osoby" type="nfz:TTypIdOsoby" use="required"/>
+                  <xs:attribute name="typ-id-nazwa" use="optional" type="nfz:TTekstDo100"/>
+                  <xs:attribute name="typ-id-kod-kraju" use="optional" type="nfz:TTekstDo2"/>
+                  <xs:attribute name="id-osoby" type="nfz:TTekstDo30" use="required"/>
+                  <xs:attribute name="nazwisko" type="nfz:TTekstDo40" use="required"/>
+                  <xs:attribute name="imie" type="nfz:TTekstDo32" use="required"/>
+                  <xs:attribute name="data-ur" type="nfz:TData" use="optional"/>
+                  <xs:attribute name="plec" use="optional" type="nfz:TPlec"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="okreslenie-wyrob-med" minOccurs="1" maxOccurs="1">
+                <xs:complexType>
+                	<xs:sequence>
+	                  <xs:choice>
+	                    <xs:element name="jest-zlecenie" minOccurs="1" maxOccurs="1">
+	                      <xs:complexType>
+	                        <xs:attribute name="nr-zlecenia-nfz" use="required" type="nfz:TNrZleceniaNfz24Znaki"/>
+	                        <xs:attribute name="ow-nfz" use="required" type="nfz:TOwNFZ"/>
+	                      </xs:complexType>
+	                    </xs:element>
+						<xs:element name="brak-zlecenia" minOccurs="1" maxOccurs="1">
+	                      <xs:complexType>
+	                        <xs:attribute name="przyczyna" use="required" type="nfz:TTekstOd10Do1000"/>
+	                      </xs:complexType>
+	                    </xs:element>
+	                  </xs:choice>
+	                  <xs:element name="wyrob-med" minOccurs="1" maxOccurs="1">
+	                      <xs:complexType>
+	                        <xs:sequence>
+	                          <xs:element name="umiejscowienie" minOccurs="0" maxOccurs="1">
+	                            <xs:complexType>
+	                              <xs:attribute name="lewostronne" use="required" type="nfz:TTakNie"/>
+	                              <xs:attribute name="prawostronne" use="required" type="nfz:TTakNie"/>
+	                            </xs:complexType>
+	                          </xs:element>
+	                        </xs:sequence>
+	                        <xs:attribute name="kod-przedm" use="required" type="nfz:TTekstDo16"/>
+	                        <xs:attribute name="nazwa-przedm" use="required" type="nfz:TTekstDo250"/>
+	                        <xs:attribute name="id-prod-handl" use="optional" type="nfz:TLiczba12"/>
+							<xs:attribute name="wytworca" use="required" type="nfz:TTekstDo250"/>
+						    <xs:attribute name="model" use="required" type="nfz:TTekstDo250"/>
+						    <xs:attribute name="nazwa-handlowa" use="required" type="nfz:TTekstDo500"/>
+						    <xs:attribute name="nr-seryjny" use="optional" type="nfz:TTekstDo40"/>
+						    <xs:attribute name="uzasadnienie-jedn-dane-med-swiadczeniobiorcy" use="required" type="nfz:TTekstDo500"/>
+                     	 </xs:complexType>
+                      </xs:element>
+                    </xs:sequence>
+				  <xs:attribute name="kod-mz" use="required" type="nfz:TTekstDo16"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="dane-dt-wystawienia" minOccurs="1" maxOccurs="1">
+                <xs:complexType>
+                  <xs:attribute name="data-wystawienia" type="nfz:TData" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="nr-zlecenia-nfz" use="optional" type="nfz:TNrZleceniaNfz"/>
+          </xs:complexType>
+        </xs:element>
+		<xs:element ref="dsig:Signature" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute name="typ-nad" use="required" type="nfz:TTypNad" fixed="P"/>
+      <xs:attribute name="ow-nad" use="required" type="nfz:TOwNFZ"/>
+      <xs:attribute name="id-nad" use="required" type="nfz:TTekstDo24"/>
+      <xs:attribute name="id-inst-nad" use="required" type="nfz:TTekstDo38"/>
+      <xs:attribute name="id-tech-dokumentu" use="required" type="nfz:TTekstDo38"/>
+      <xs:attribute name="nr-wersji" use="required" type="nfz:TLiczba4_0"/>
+      <xs:attribute name="data-gen" use="required" type="nfz:TDataTime"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:simpleType name="TTypNad">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="S"/>
+      <xs:enumeration value="L"/>
+      <xs:enumeration value="P"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TOwNFZ">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="01"/>
+      <xs:enumeration value="02"/>
+      <xs:enumeration value="03"/>
+      <xs:enumeration value="04"/>
+      <xs:enumeration value="05"/>
+      <xs:enumeration value="06"/>
+      <xs:enumeration value="07"/>
+      <xs:enumeration value="08"/>
+      <xs:enumeration value="09"/>
+      <xs:enumeration value="10"/>
+      <xs:enumeration value="11"/>
+      <xs:enumeration value="12"/>
+      <xs:enumeration value="13"/>
+      <xs:enumeration value="14"/>
+      <xs:enumeration value="15"/>
+      <xs:enumeration value="16"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TNrZleceniaNfz">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="17"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TNrZleceniaNfz24Znaki">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="24"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TData">
+    <xs:restriction base="xs:date"/>
+  </xs:simpleType>
+  <xs:simpleType name="TDataTime">
+    <xs:restriction base="xs:dateTime"/>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo2">
+	<xs:restriction base="xs:string">
+	  <xs:minLength value="1"/>
+	  <xs:maxLength value="2"/>
+	</xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo3">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="3"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo5">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="5"/>
+    </xs:restriction>
+  </xs:simpleType>  
+  <xs:simpleType name="TTekst7">
+    <xs:restriction base="xs:string">
+      <xs:length value="7"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo10">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo16">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="16"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo20">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo24">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="24"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo25">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="25"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo30">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="30"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo32">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="32"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo38">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="38"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo40">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="40"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo100">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="100"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo250">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="250"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo500">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="500"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstOd10Do1000">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="10"/>
+      <xs:maxLength value="1000"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TLiczba4_0">
+    <xs:restriction base="xs:integer">
+      <xs:totalDigits value="4"/>
+	  <xs:minInclusive value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TLiczba4_0z0">
+    <xs:restriction base="xs:integer">
+      <xs:totalDigits value="4"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TLiczba12">
+    <xs:restriction base="xs:integer">
+      <xs:totalDigits value="12"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTakNie">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="T"/>
+      <xs:enumeration value="N"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTypIdOsoby">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="P"/>
+      <xs:enumeration value="R"/>
+      <xs:enumeration value="D"/>
+      <xs:enumeration value="T"/>
+      <xs:enumeration value="I"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TUprawDodKod">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TPlec">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="0"/>
+      <xs:enumeration value="1"/>
+      <xs:enumeration value="2"/>
+      <xs:enumeration value="9"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TOsobaSklad">
+    <xs:restriction base="xs:integer">
+      <xs:enumeration value="1"/>
+      <xs:enumeration value="2"/>
+      <xs:enumeration value="3"/>
+	  <xs:enumeration value="4"/>
+	  <xs:enumeration value="5"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

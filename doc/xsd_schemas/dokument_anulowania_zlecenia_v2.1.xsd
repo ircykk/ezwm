@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:nfz="https://ezwm.nfz.gov.pl/xml/e-zpo/dok-anulowania-zlec/v2.1" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" targetNamespace="https://ezwm.nfz.gov.pl/xml/e-zpo/dok-anulowania-zlec/v2.1" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>
+  <xs:element name="dokument-zpo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="zlecenie" minOccurs="1" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="dane-anulowania" minOccurs="1" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="mies-anulowania" minOccurs="0" maxOccurs="1">
+                      <xs:complexType>
+                        <xs:attribute name="mies-od" type="nfz:TRokMiesiac" use="required"/>
+                        <xs:attribute name="lb-mies" type="nfz:TLbMies" use="required"/>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:choice>
+                      <xs:element name="podmiot-anulujacy-zlecenia" minOccurs="1" maxOccurs="1">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="swd" minOccurs="0" maxOccurs="1">
+                              <xs:complexType>
+                                <xs:attribute name="ow-nfz" type="nfz:TOwNFZUzdr" use="required"/>
+                                <xs:attribute name="kod-swd" type="nfz:TTekstDo24" use="required"/>
+                              </xs:complexType>
+                            </xs:element>
+                            <xs:element name="osoba-uprawniona" minOccurs="1" maxOccurs="1">
+                              <xs:complexType>
+                                <xs:attribute name="typ-pers-zlec" use="optional" type="nfz:TTypPersZlec"/>
+                                <xs:attribute name="id-zlec" use="required" type="nfz:TTekstDo24"/>
+                                <xs:attribute name="nazwisko" type="nfz:TTekstDo40" use="required"/>
+                                <xs:attribute name="imie" type="nfz:TTekstDo32" use="required"/>
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                          <xs:attribute name="nazwa" type="nfz:TTekstDo255" use="required"/>
+                          <xs:attribute name="regon" type="nfz:TRegon" use="required"/>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="ow-anulowania-zlecenia" minOccurs="1" maxOccurs="1">
+                        <xs:complexType>
+                          <xs:attribute name="ow-nfz" use="required" type="nfz:TOwNFZ"/>
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:choice>
+                  </xs:sequence>
+                  <xs:attribute name="data-anulowania" type="nfz:TData" use="required"/>
+                  <xs:attribute name="tryb-anulowania" type="nfz:TTrybAnulowania" use="required"/>
+                  <xs:attribute name="przyczyna" type="nfz:TTekstDo500" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="nr-zlecenia-nfz" type="nfz:TNrZleceniaNfz" use="required"/>
+          </xs:complexType>
+        </xs:element>
+		<xs:element ref="dsig:Signature" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute name="typ-nad" use="required" type="nfz:TTypNad"/>
+      <xs:attribute name="ow-nad" use="required" type="nfz:TOwNFZUzdr"/>
+      <xs:attribute name="id-nad" use="required" type="nfz:TTekstDo24"/>
+      <xs:attribute name="id-inst-nad" use="required" type="nfz:TTekstDo38"/>
+      <xs:attribute name="id-tech-dokumentu" use="required" type="nfz:TTekstDo38"/>
+      <xs:attribute name="nr-wersji" use="required" type="nfz:TLiczba4_0"/>
+      <xs:attribute name="data-gen" use="required" type="nfz:TDataTime"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:simpleType name="TTypNad">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="S"/>
+      <xs:enumeration value="L"/>
+      <xs:enumeration value="P"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TOwNFZ">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="01"/>
+      <xs:enumeration value="02"/>
+      <xs:enumeration value="03"/>
+      <xs:enumeration value="04"/>
+      <xs:enumeration value="05"/>
+      <xs:enumeration value="06"/>
+      <xs:enumeration value="07"/>
+      <xs:enumeration value="08"/>
+      <xs:enumeration value="09"/>
+      <xs:enumeration value="10"/>
+      <xs:enumeration value="11"/>
+      <xs:enumeration value="12"/>
+      <xs:enumeration value="13"/>
+      <xs:enumeration value="14"/>
+      <xs:enumeration value="15"/>
+      <xs:enumeration value="16"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TOwNFZUzdr">
+    <xs:union memberTypes="nfz:TOwNFZ">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="17"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="TNrZleceniaNfz">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="17"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TData">
+    <xs:restriction base="xs:date"/>
+  </xs:simpleType>
+  <xs:simpleType name="TDataTime">
+    <xs:restriction base="xs:dateTime"/>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo24">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="24"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo32">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="32"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo38">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="38"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo40">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="40"/>
+    </xs:restriction>
+  </xs:simpleType> 
+  <xs:simpleType name="TTekstDo255">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="255"/>
+    </xs:restriction>
+  </xs:simpleType>  
+  <xs:simpleType name="TTekstDo500">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="500"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TLiczba4_0">
+    <xs:restriction base="xs:integer">
+      <xs:totalDigits value="4"/>
+  	  <xs:minInclusive value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTrybAnulowania">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="C"/>
+      <xs:enumeration value="K"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TLbMies">
+    <xs:restriction base="xs:integer">
+      <xs:totalDigits value="2"/>
+      <xs:minInclusive value="1"/>
+      <xs:maxInclusive value="12"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TRokMiesiac">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="\d{4}-\d{2}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TRegon">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:length value="9"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:length value="14"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="TTypPersZlec">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="11"/>
+      <xs:enumeration value="5"/>
+      <xs:enumeration value="6"/>
+      <xs:enumeration value="18"/>
+      <xs:enumeration value="19"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

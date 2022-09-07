@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:nfz="https://ezwm.nfz.gov.pl/ws/broker/nfz/xml/e-zpo/document-errors/v2.1" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" targetNamespace="https://ezwm.nfz.gov.pl/ws/broker/nfz/xml/e-zpo/document-errors/v2.1" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>
+  <xs:element name="komunikat">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="problem" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:attribute name="kod-problemu" use="required" type="nfz:TTekstDo10"/>
+            <xs:attribute name="opis" use="required" type="nfz:TTekstDo1000"/>
+          </xs:complexType>
+        </xs:element>
+		<xs:element ref="dsig:Signature" minOccurs="0"/>
+      </xs:sequence>
+	  <xs:attribute name="nazwa-sys" type="nfz:TTekst3Do15" use="required"/>
+	  <xs:attribute name="wersja-sys" type="nfz:TTekstDo15" use="required"/>
+	  <xs:attribute name="id-trans" type="nfz:TTekstDo38" use="required"/>
+      <xs:attribute name="typ" use="required" type="nfz:TTypKomunikatu"/>
+      <xs:attribute name="data-gen" use="required" type="nfz:TDataTime"/>
+      <xs:attribute name="id-tech-dokumentu" use="required" type="nfz:TTekstDo38"/>
+      <xs:attribute name="nr-wersji" use="required" type="nfz:TLiczba4_0"/>
+      <xs:attribute name="data-czas-przetwarzania" use="required" type="nfz:TDataTime"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:simpleType name="TTekstDo10">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekst3Do15">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="3"/>
+      <xs:maxLength value="15"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo15">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="15"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo38">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="38"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo1000">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="1000"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TLiczba4_0">
+    <xs:restriction base="xs:integer">
+      <xs:totalDigits value="4"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TDataTime">
+    <xs:restriction base="xs:dateTime"/>
+  </xs:simpleType>
+  <xs:simpleType name="TTypKomunikatu">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="https://ezwm.nfz.gov.pl/xml/e-zpo/dok-zlecenia/v2.1"/>
+      <xs:enumeration value="https://ezwm.nfz.gov.pl/xml/e-zpo/dok-anulowania-zlec/v2.1"/>
+      <xs:enumeration value="https://ezwm.nfz.gov.pl/xml/e-zpo/dok-pobrania-real/v2.1"/>
+      <xs:enumeration value="https://ezwm.nfz.gov.pl/xml/e-zpo/dok-realizacji/v2.1"/>
+      <xs:enumeration value="https://ezwm.nfz.gov.pl/xml/e-zpo/dok-wycofanie-pobrania-lub-potw/v2.1"/>
+      <xs:enumeration value="https://ezwm.nfz.gov.pl/xml/e-zpo/dok-zadania-weryf-ow/v2.1"/>
+      <xs:enumeration value="https://ezwm.nfz.gov.pl/xml/e-zpo/dok-zlecenia-naprawy/v2.1"/>
+	  <xs:enumeration value="https://ezwm.nfz.gov.pl/xml/e-zpo/dok-potw-odbioru/v2.1"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

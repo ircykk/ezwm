@@ -1,0 +1,10 @@
+xsd2php:
+  namespaces:
+    'https://ezwm.nfz.gov.pl/xml/e-zpo/dok-anulowania-zlec/v2.1': 'Ircykk\Ezwm\Schema'
+    'http://www.w3.org/2000/09/xmldsig#': 'Ircykk\Ezwm\Schema\xmldsig'
+    'https://ezwm.nfz.gov.pl/xml/e-zpo/dok-zlecenia/v2.1': 'Ircykk\Ezwm\Schema\DokZlecenia'
+    'https://ezwm.nfz.gov.pl/ws/broker/nfz/xml/e-zpo/document-request/v2.1': 'Ircykk\Ezwm\Schema\Zpo\DocumentRequest'
+  destinations_php:
+    'Ircykk\Ezwm\Schema': src/Ircykk/Ezwm/Schema
+  destinations_jms:
+    'Ircykk\Ezwm\Schema': metadata

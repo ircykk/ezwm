@@ -1,0 +1,25 @@
+{
+  "name": "ircykk/ezwm",
+  "description": "EZWM API",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Ireneusz Kierkowski",
+      "email": "ireneusz@kierkowski.com"
+    }
+  ],
+  "require": {
+    "ext-soap": "*"
+  },
+  "require-dev": {
+    "wsdl2phpgenerator/wsdl2phpgenerator": "^3.4",
+    "goetas-webservices/xsd2php-runtime": "^0.2.2",
+    "goetas-webservices/xsd2php": "^0.3"
+  },
+  "autoload": {
+    "classmap": [
+      "src"
+    ]
+  }
+}

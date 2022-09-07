@@ -1,0 +1,412 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:nfz="https://ezwm.nfz.gov.pl/xml/e-zpo/dok-realizacji/v2.1" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" targetNamespace="https://ezwm.nfz.gov.pl/xml/e-zpo/dok-realizacji/v2.1" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>
+  <xs:element name="dokument-zpo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="zlecenie" minOccurs="1" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="dane-realizacji" minOccurs="1" maxOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="mies-realizacji" minOccurs="0" maxOccurs="1">
+                      <xs:complexType>
+                        <xs:attribute name="mies-od" type="nfz:TRokMiesiac" use="required"/>
+                        <xs:attribute name="lb-mies" type="nfz:TLbMies" use="required"/>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="podmiot-realizacji-zlecenia" minOccurs="1" maxOccurs="1">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="swd" minOccurs="1" maxOccurs="1">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="umowa-z-nfz" minOccurs="1" maxOccurs="1">
+                                  <xs:complexType>
+                                    <xs:attribute name="nr-umowy" type="nfz:TTekstDo24" use="required"/>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                              <xs:attribute name="ow-nfz" type="nfz:TOwNFZ" use="required"/>
+                              <xs:attribute name="kod-swd" type="nfz:TTekstDo24" use="required"/>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="nazwa" type="nfz:TTekstDo255" use="required"/>
+                        <xs:attribute name="regon" type="nfz:TRegon" use="required"/>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="miejsce-realizacji-zlecenia" minOccurs="1" maxOccurs="1">
+                      <xs:complexType>
+                        <xs:attribute name="kod-tech" type="nfz:TLiczba12_0" use="required"/>
+                        <xs:attribute name="nazwa-miej" type="nfz:TTekstDo250" use="required"/>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:choice>
+                      <xs:element name="dane-wyrobu" minOccurs="1" maxOccurs="1">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="wydany-wyrob" minOccurs="1" maxOccurs="4">
+                              <xs:complexType>
+                                <xs:sequence>
+                                  <xs:element name="zmiana-limitu" minOccurs="0" maxOccurs="1">
+                                    <xs:complexType>
+                                      <xs:sequence>
+                                        <xs:element name="przyczyna-zmiany" minOccurs="1" maxOccurs="unbounded">
+                                          <xs:complexType>
+                                            <xs:attribute name="przyczyna" use="required" type="nfz:TPrzyczyna"/>
+                                            <xs:attribute name="opis" use="optional" type="nfz:TTekstDo1000"/>
+                                          </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="wynik-zmiany" minOccurs="1" maxOccurs="1">
+                                          <xs:complexType>
+                                            <xs:attribute name="limit-ceny" use="required" type="nfz:TLiczba16_2"/>
+                                            <xs:attribute name="rodzaj-limitu-ceny" use="required" type="nfz:TRodzajLimituCeny"/>
+                                            <xs:attribute name="refundacja" use="required" type="nfz:TLiczba3_0"/>
+                                          </xs:complexType>
+                                        </xs:element>
+                                      </xs:sequence>
+                                    </xs:complexType>
+                                  </xs:element>
+                                  <xs:element name="wydany-prod-handl" minOccurs="1" maxOccurs="unbounded">
+                                    <xs:complexType>
+                                      <xs:attribute name="id-prod-handl" use="optional" type="nfz:TLiczba12_0"/>
+                                      <xs:attribute name="wytworca" use="required" type="nfz:TTekstDo250"/>
+                                      <xs:attribute name="model" use="required" type="nfz:TTekstDo250"/>
+                                      <xs:attribute name="nazwa-handlowa" use="required" type="nfz:TTekstDo500"/>
+                                      <xs:attribute name="nr-seryjny" use="optional" type="nfz:TTekstDo40"/>
+                                      <xs:attribute name="lb-wyd-sztuk" use="required" type="nfz:TLiczba4_0"/>
+                                      <xs:attribute name="cena-det-szt" use="required" type="nfz:TLiczba16_2WiekszeOdO"/>
+                                      <xs:attribute name="mies-od" use="optional" type="nfz:TRokMiesiac"/>
+                                      <xs:attribute name="lb-mies" use="optional" type="nfz:TLbMies"/>
+                                    </xs:complexType>
+                                  </xs:element>
+                                </xs:sequence>
+                                <xs:attribute name="kod-przedm" use="required" type="nfz:TTekstDo16"/>
+                                <xs:attribute name="umiejsc" use="optional" type="nfz:TUmiejsc"/>
+                                <xs:attribute name="kwota-refundacji" use="required" type="nfz:TLiczba8_2"/>
+                                <xs:attribute name="kwota-doplaty" use="required" type="nfz:TLiczba8_2"/>
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="dane-naprawy" minOccurs="1" maxOccurs="1">
+                        <xs:complexType>
+                          <xs:attribute name="kod-naprawy" use="required" type="nfz:TTekstDo16"/>
+                          <xs:attribute name="id-prod-handl" use="optional" type="nfz:TLiczba12_0"/>
+                          <xs:attribute name="opis-naprawy" use="required" type="nfz:TTekstDo1000"/>
+                          <xs:attribute name="kwota-refundacji" use="required" type="nfz:TLiczba8_2"/>
+                          <xs:attribute name="kwota-doplaty" use="required" type="nfz:TLiczba8_2"/>
+                          <xs:attribute name="okres-gwarancji" use="required" type="nfz:TLiczba2_0"/>
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:choice>
+                    <xs:element name="potwierdzenie-wydania" minOccurs="1" maxOccurs="1">
+                      <xs:complexType>
+                        <xs:attribute name="data-wydania" use="required" type="nfz:TData"/>
+						<xs:attribute name="rodzaj-wydania" use="optional" type="nfz:TRodzajOdbioru"/>
+                        <xs:attribute name="nazwisko" use="required" type="nfz:TTekstDo40"/>
+                        <xs:attribute name="imie" use="required" type="nfz:TTekstDo32"/>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="potwierdzenie-odbioru" minOccurs="0" maxOccurs="1">
+                      <xs:complexType>
+                        <xs:choice>
+                          <xs:element name="odbiorca-pacjent" minOccurs="1" maxOccurs="1"/>
+                          <xs:element name="odbiorca-inna-osoba" minOccurs="1" maxOccurs="1">
+                            <xs:complexType>
+                              <xs:attribute name="typ-id-osoby" type="nfz:TTypIdOsoby" use="required"/>
+                              <xs:attribute name="typ-id-nazwa" use="optional" type="nfz:TTekstDo100"/>
+                              <xs:attribute name="typ-id-kod-kraju" use="optional" type="nfz:TTekstDo2"/>
+                              <xs:attribute name="id-osoby" type="nfz:TTekstDo30" use="required"/>
+                              <xs:attribute name="nazwisko" type="nfz:TTekstDo40" use="required"/>
+                              <xs:attribute name="imie" type="nfz:TTekstDo32" use="required"/>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:choice>
+                        <xs:attribute name="data-odbioru" use="required" type="nfz:TData"/>
+                        <xs:attribute name="rodzaj-odbioru" use="optional" type="nfz:TRodzajOdbioru"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="data-pobrania" type="nfz:TData" use="required"/>
+                  <xs:attribute name="czesciowa-realizacja" type="nfz:TCzesciowaRealizacja" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="nr-zlecenia-nfz" type="nfz:TNrZleceniaNfz" use="required"/>
+            <xs:attribute name="kod-dostepu" type="nfz:TKodDostepu" use="required"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element ref="dsig:Signature" minOccurs="0"/>
+      </xs:sequence>
+      <xs:attribute name="typ-nad" use="required" type="nfz:TTypNad" fixed="S"/>
+      <xs:attribute name="ow-nad" use="required" type="nfz:TOwNFZ"/>
+      <xs:attribute name="id-nad" use="required" type="nfz:TTekstDo24"/>
+      <xs:attribute name="id-inst-nad" use="required" type="nfz:TTekstDo38"/>
+      <xs:attribute name="id-tech-dokumentu" use="required" type="nfz:TTekstDo38"/>
+      <xs:attribute name="nr-wersji" use="required" type="nfz:TLiczba4_0"/>
+      <xs:attribute name="data-gen" use="required" type="nfz:TDataTime"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:simpleType name="TTypNad">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="S"/>
+      <xs:enumeration value="L"/>
+      <xs:enumeration value="P"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TOwNFZ">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="01"/>
+      <xs:enumeration value="02"/>
+      <xs:enumeration value="03"/>
+      <xs:enumeration value="04"/>
+      <xs:enumeration value="05"/>
+      <xs:enumeration value="06"/>
+      <xs:enumeration value="07"/>
+      <xs:enumeration value="08"/>
+      <xs:enumeration value="09"/>
+      <xs:enumeration value="10"/>
+      <xs:enumeration value="11"/>
+      <xs:enumeration value="12"/>
+      <xs:enumeration value="13"/>
+      <xs:enumeration value="14"/>
+      <xs:enumeration value="15"/>
+      <xs:enumeration value="16"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TNrZleceniaNfz">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="17"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TData">
+    <xs:restriction base="xs:date"/>
+  </xs:simpleType>
+  <xs:simpleType name="TDataTime">
+    <xs:restriction base="xs:dateTime"/>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo2">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo3">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="3"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo10">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo16">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="16"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo24">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="24"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo25">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="25"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo30">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="30"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo32">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="32"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo38">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="38"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo40">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="40"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo100">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="100"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo250">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="250"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo255">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="255"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo500">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="500"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TTekstDo1000">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="1000"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TLiczba2_0">
+    <xs:restriction base="xs:integer">
+      <xs:totalDigits value="2"/>
+      <xs:minInclusive value="0"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TLiczba3_0">
+    <xs:restriction base="xs:integer">
+      <xs:totalDigits value="3"/>
+      <xs:minInclusive value="0"/>
+      <xs:maxInclusive value="100"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TLiczba8_2">
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="8"/>
+      <xs:fractionDigits value="2"/>
+      <xs:minInclusive value="0"/>
+      <xs:maxExclusive value="1000000"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TLiczba16_2">
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="16"/>
+      <xs:fractionDigits value="2"/>
+      <xs:minInclusive value="0"/>
+      <xs:maxExclusive value="100000000000000"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TLiczba16_2WiekszeOdO">
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="16"/>
+      <xs:fractionDigits value="2"/>
+      <xs:minExclusive value="0"/>
+      <xs:maxExclusive value="100000000000000"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TLiczba12_0">
+    <xs:restriction base="xs:integer">
+      <xs:totalDigits value="12"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TLiczba4_0">
+    <xs:restriction base="xs:integer">
+      <xs:totalDigits value="4"/>
+      <xs:minInclusive value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TKodDostepu">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:length value="11"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:length value="8"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="TRodzajLimituCeny">
+    <xs:restriction base="xs:integer">
+      <xs:enumeration value="1"/>
+      <xs:enumeration value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TCzesciowaRealizacja">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="T"/>
+      <xs:enumeration value="N"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TLbMies">
+    <xs:restriction base="xs:integer">
+      <xs:totalDigits value="1"/>
+      <xs:minInclusive value="1"/>
+      <xs:maxInclusive value="6"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TRokMiesiac">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="\d{4}-\d{2}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TRegon">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:length value="9"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:length value="14"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="TTypIdOsoby">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="P"/>
+      <xs:enumeration value="D"/>
+      <xs:enumeration value="T"/>
+      <xs:enumeration value="I"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TUmiejsc">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="L"/>
+      <xs:enumeration value="P"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TPrzyczyna">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="W"/>
+      <xs:enumeration value="D"/>
+      <xs:enumeration value="S"/>
+      <xs:enumeration value="R"/>
+      <xs:enumeration value="I"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TRodzajOdbioru">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="O"/>
+      <xs:enumeration value="W"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
